@@ -109,8 +109,8 @@ const EditPost: React.FC = () => {
             <img
               src={
                 post.image
-                  ? `http://localhost:5000${post.image}` 
-                  : '/images/dummyimage.png' 
+                  ? `${process.env.NEXT_PUBLIC_API_URL}${post.image}`
+                  : '/images/dummyimage.png'
               }
               alt={post.title}
               className="w-full h-40 object-cover rounded mt-4"

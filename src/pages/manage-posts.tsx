@@ -88,15 +88,14 @@ const ManagePosts: React.FC = () => {
           posts.map((post) => (
             <div
               key={post._id}
-              className={`border rounded-lg shadow p-4 ${
-                selectedPosts.includes(post._id) ? "ring-2 ring-blue-500" : ""
-              }`}
+              className={`border rounded-lg shadow p-4 ${selectedPosts.includes(post._id) ? "ring-2 ring-blue-500" : ""
+                }`}
             >
               <img
                 src={
                   post.image
-                    ? `http://localhost:5000${post.image}` 
-                    : "/images/dummyimage.png" 
+                    ? `${process.env.NEXT_PUBLIC_API_URL}${post.image}`
+                    : '/images/dummyimage.png'
                 }
                 alt={post.title}
                 className="w-full h-40 object-cover rounded"
@@ -106,11 +105,10 @@ const ManagePosts: React.FC = () => {
               <div className="flex justify-between items-center mt-4">
                 <button
                   onClick={() => handleSelectPost(post._id)}
-                  className={`px-2 py-1 text-sm rounded ${
-                    selectedPosts.includes(post._id)
+                  className={`px-2 py-1 text-sm rounded ${selectedPosts.includes(post._id)
                       ? "bg-blue-500 text-white"
                       : "bg-gray-200 hover:bg-gray-300"
-                  }`}
+                    }`}
                 >
                   {selectedPosts.includes(post._id) ? "Unselect" : "Select"}
                 </button>
