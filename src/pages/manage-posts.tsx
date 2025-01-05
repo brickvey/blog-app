@@ -7,7 +7,7 @@ import { fetcher } from "../utils/api";
 type Post = {
   _id: string;
   title: string;
-  shortDescription: string;
+  description: string;
   image: string;
 };
 
@@ -101,7 +101,7 @@ const ManagePosts: React.FC = () => {
                 className="w-full h-40 object-cover rounded"
               />
               <h2 className="text-xl font-bold mt-2">{post.title}</h2>
-              <p className="text-gray-600">{post.shortDescription}</p>
+              <p className="text-gray-600">{post.description}</p>
               <div className="flex justify-between items-center mt-4">
                 <button
                   onClick={() => handleSelectPost(post._id)}
