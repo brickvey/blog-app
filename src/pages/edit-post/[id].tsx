@@ -17,7 +17,7 @@ const EditPost: React.FC = () => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [content, setContent] = useState("");
-  const [image, setImage] = useState<File | null>(null); // For new image upload
+  const [image, setImage] = useState<File | null>(null);
   const router = useRouter();
   const { id } = router.query;
 
@@ -39,24 +39,31 @@ const EditPost: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+  
     const formData = new FormData();
     formData.append("title", title);
     formData.append("description", description);
     formData.append("content", content);
+  
     if (image) {
-      formData.append("image", image); // Only include the image if a new one is uploaded
+      formData.append("image", image); // Ensure this is the correct key for the file
     }
-
+  
+    // Debug log
+    for (const [key, value] of formData.entries()) {
+      console.log(key, value);
+    }
+  
     try {
       await fetcher(`/posts/${id}`, {
         method: "PATCH",
         body: formData,
       });
-      router.push("/manage-posts"); // Redirect to Manage Posts after updating
+      router.push("/manage-posts");
     } catch (error) {
       console.error("Failed to update post:", error);
     }
-  };
+  };  
 
   if (!post) return <p>Loading...</p>;
 
@@ -102,16 +109,15 @@ const EditPost: React.FC = () => {
           <input
             type="file"
             accept="image/*"
-            onChange={(e) => setImage(e.target.files?.[0] || null)}
+            onChange={(e) => {
+              const selectedFile = e.target.files?.[0];
+              setImage(selectedFile || null);
+            }}
             className="w-full border px-3 py-2 rounded focus:outline-none focus:ring focus:ring-blue-300"
           />
           {post.image && (
             <img
-              src={
-                post.image
-                  ? `${process.env.NEXT_PUBLIC_API_URL}${post.image}`
-                  : '/images/dummyimage.png'
-              }
+              src={post.image || "/images/dummyimage.png"}
               alt={post.title}
               className="w-full h-40 object-cover rounded mt-4"
             />

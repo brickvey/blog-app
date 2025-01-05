@@ -20,7 +20,7 @@ const BlogPage: React.FC<Props> = ({ post }) => {
       <img
         src={
           post.image
-            ? `${process.env.NEXT_PUBLIC_API_URL}${post.image}`
+            ? post.image
             : '/images/dummyimage.png'
         }
         alt={post.title}

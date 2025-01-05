@@ -8,24 +8,45 @@ const AddPost: React.FC = () => {
   const [title, setTitle] = useState("");
   const [shortDescription, setShortDescription] = useState("");
   const [content, setContent] = useState("");
-  const [image, setImage] = useState<File | null>(null); 
+  const [image, setImage] = useState<File | null>(null);
   const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    const formData = new FormData();
-    formData.append("title", title);
-    formData.append("description", shortDescription);
-    formData.append("content", content);
+    let uploadedImageUrl = null;
+    
     if (image) {
-      formData.append("image", image); 
+      const formData = new FormData();
+      formData.append("file", image); 
+      formData.append(
+        "upload_preset",
+        process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET! 
+      );
+
+      try {
+        const response = await fetch(process.env.NEXT_PUBLIC_CLOUDINARY_URL!, {
+          method: "POST",
+          body: formData,
+        });
+        const data = await response.json();
+        uploadedImageUrl = data.secure_url; 
+      } catch (error) {
+        console.error("Image upload failed:", error);
+        return;
+      }
     }
 
     try {
       await fetcher("/posts", {
         method: "POST",
-        body: formData, 
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          title,
+          description: shortDescription,
+          content,
+          image: uploadedImageUrl, 
+        }),
       });
       router.push("/manage-posts"); 
     } catch (error) {

@@ -61,8 +61,8 @@ const HomePage: React.FC = () => {
               <div className="border rounded-lg shadow p-4">
                 <img
                   src={
-                    post.image
-                      ? `${process.env.NEXT_PUBLIC_API_URL}${post.image}` 
+                    post.image 
+                      ? post.image 
                       : '/images/dummyimage.png' 
                   }
                   alt={post.title || 'Default Image'}

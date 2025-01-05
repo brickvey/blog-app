@@ -94,7 +94,7 @@ const ManagePosts: React.FC = () => {
               <img
                 src={
                   post.image
-                    ? `${process.env.NEXT_PUBLIC_API_URL}${post.image}`
+                    ? post.image
                     : '/images/dummyimage.png'
                 }
                 alt={post.title}
@@ -106,8 +106,8 @@ const ManagePosts: React.FC = () => {
                 <button
                   onClick={() => handleSelectPost(post._id)}
                   className={`px-2 py-1 text-sm rounded ${selectedPosts.includes(post._id)
-                      ? "bg-blue-500 text-white"
-                      : "bg-gray-200 hover:bg-gray-300"
+                    ? "bg-blue-500 text-white"
+                    : "bg-gray-200 hover:bg-gray-300"
                     }`}
                 >
                   {selectedPosts.includes(post._id) ? "Unselect" : "Select"}
