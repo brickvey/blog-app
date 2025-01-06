@@ -2,7 +2,7 @@ import React from "react";
 
 async function fetchPost(id: string) {
   const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/posts/${id}`, {
-    cache: "no-store", // Fetch fresh data
+    cache: "no-store", 
   });
 
   if (!res.ok) {
@@ -13,7 +13,7 @@ async function fetchPost(id: string) {
 }
 
 export default async function PostPage({ params }: { params: Promise<{ id: string }> }) {
-  const { id } = await params; // Await params to extract id
+  const { id } = await params; 
 
   const post = await fetchPost(id);
 
