@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
-import { fetcher } from "../utils/api";
+import { fetcher } from "@/utils/api";
 
 type Post = {
   _id: string;

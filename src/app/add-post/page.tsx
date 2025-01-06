@@ -1,8 +1,8 @@
 "use client";
 
 import React, { useState } from "react";
-import { useRouter } from "next/router";
-import { fetcher } from "../utils/api";
+import { useRouter } from "next/navigation";
+import { fetcher } from "@/utils/api";
 
 const AddPost: React.FC = () => {
   const [title, setTitle] = useState("");

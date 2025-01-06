@@ -1,8 +1,8 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { useRouter } from "next/router";
-import { fetcher } from "../../utils/api";
+import { useRouter, useParams } from "next/navigation"; // Use useParams for dynamic route parameters
+import { fetcher } from "@/utils/api";
 
 type Post = {
   _id: string;
@@ -18,8 +18,10 @@ const EditPost: React.FC = () => {
   const [description, setDescription] = useState("");
   const [content, setContent] = useState("");
   const [image, setImage] = useState<File | null>(null);
+
   const router = useRouter();
-  const { id } = router.query;
+  const params = useParams(); 
+  const id = params?.id; 
 
   useEffect(() => {
     const loadPost = async () => {
@@ -39,21 +41,16 @@ const EditPost: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-  
+
     const formData = new FormData();
     formData.append("title", title);
     formData.append("description", description);
     formData.append("content", content);
-  
+
     if (image) {
-      formData.append("image", image); // Ensure this is the correct key for the file
+      formData.append("image", image); 
     }
-  
-    // Debug log
-    for (const [key, value] of formData.entries()) {
-      console.log(key, value);
-    }
-  
+
     try {
       await fetcher(`/posts/${id}`, {
         method: "PATCH",
@@ -63,7 +60,7 @@ const EditPost: React.FC = () => {
     } catch (error) {
       console.error("Failed to update post:", error);
     }
-  };  
+  };
 
   if (!post) return <p>Loading...</p>;
 
