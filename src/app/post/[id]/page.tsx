@@ -13,7 +13,9 @@ async function fetchPost(id: string) {
 }
 
 export default async function PostPage({ params }: { params: { id: string } }) {
-  const post = await fetchPost(params.id);
+  const { id } = await params; 
+
+  const post = await fetchPost(id);
 
   return (
     <div className="container mx-auto p-4">
